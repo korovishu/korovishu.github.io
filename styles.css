@@ -1,0 +1,52 @@
+ul {
+  list-style: none;
+}
+.container {
+  width: fit-content;
+  position: relative;
+  left: 400px;
+  display: grid;
+  margin: 10px;
+  grid-template-columns: 300px 500px;
+  grid-template-rows: 800px 20px;
+  overflow: hidden;
+  justify-items: center;
+}
+li {
+  width: 200px;
+  margin: 5px 5px 0 0;
+  padding: 12px 12px 10px 45px;
+  background-repeat: no-repeat;
+  background-position: left center;
+  text-align: left center;
+  background-size: 40px;
+  cursor: pointer;
+}
+.active {
+  background-color: blue;
+  color: white;
+  border-radius: 5px;
+}
+
+img {
+  width: 500px;
+  height: 800px;
+  object-fit: cover;
+}
+div.label {
+  grid-column-start: 2; /* start at column line 1 */
+  grid-column-end: 3; /* end at column line 4 */
+  grid-row-start: 2; /*start at row line 2 */
+  grid-row-end: 3; /* end at row line 4 */
+}
+
+.ellipses::before {
+  float: right;
+  content: attr(data-tail);
+}
+
+.ellipses {
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+}

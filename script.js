@@ -36,7 +36,7 @@ itemList.forEach((item)=>{
     textItem.classList.add("ellipses");
     let textString = item["title"].toString().slice(0);
     // Assign first half to "start" and second half to "end"
-    let midPos = Math.floor(textString.length/2);
+    let midPos = Math.ceil(textString.length/2);
     textItem.dataset.start = textString.substring(0,midPos);
     textItem.dataset.end = textString.substring(midPos,textString.length);
     listItem.append(textItem);

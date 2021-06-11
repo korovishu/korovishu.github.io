@@ -4,9 +4,6 @@ var container = document.querySelector("div.container");
 var activeItem,image,label; // Global variables for selected item, preview image,label elements.
 var flag = true; // Flag for initial loading.
 
-/*
-    UTILITY FUNCTIONS
-*/
 // To change the preview image for current selected item.
 const changePreview = function(currItem){
     activeItem.classList.toggle("active");
@@ -34,11 +31,7 @@ itemList.forEach((item)=>{
     // Set the text
     let textItem = document.createElement("div");
     textItem.classList.add("ellipses");
-    let textString = item["title"].toString().slice(0);
-    // Assign first half to "start" and second half to "end"
-    let midPos = Math.ceil(textString.length/2);
-    textItem.dataset.start = textString.substring(0,midPos);
-    textItem.dataset.end = textString.substring(midPos,textString.length);
+    textItem.innerText = item["title"];
     listItem.append(textItem);
     // Initialize display for the first item.
     if(flag){
@@ -51,9 +44,32 @@ itemList.forEach((item)=>{
     list.append(listItem);
 })
 
-/*
-    EVENT LISTENERS
-*/
+// To trim string in the middle and add ellipses
+function smartTrim(string, maxLength) {
+    if (!string) return string;
+    if (maxLength < 1) return string;
+    if (string.length <= maxLength) return string;
+    if (maxLength == 1) return string.substring(0,1) + '...';
+
+    var midpoint = Math.ceil(string.length / 2);
+    var toremove = string.length - maxLength;
+    var lstrip = Math.ceil(toremove/2);
+    var rstrip = toremove - lstrip;
+    return string.substring(0, midpoint-lstrip) + '...' 
+    + string.substring(midpoint+rstrip);
+}       
+
+// Trim text of list items
+var textItems = document.querySelectorAll("div.ellipses");
+textItems.forEach((item)=>{
+    let text = item.innerText.slice(0);
+    let maxLength = text.length;
+    while(item.offsetWidth < item.scrollWidth){
+        maxLength--;
+        item.innerText = smartTrim(text,maxLength);
+    }
+})
+
 // Adding 'click' event listeners to each list item
 var items = document.querySelectorAll("li");
 items.forEach((item) => {

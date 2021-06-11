@@ -26,14 +26,20 @@ label.classList.add("label");
 container.append(list);
 container.append(image);
 container.append(label);
-
+// Populating each list item
 itemList.forEach((item)=>{
     let listItem = document.createElement("li");
     listItem.setAttribute("id",item["title"]);
-    listItem.innerHTML = `
-    <div class="ellipses">${item["title"]}</div>
-    `;
     listItem.style.backgroundImage = `url('${item["previewImage"]}')`;
+    // Set the text
+    let textItem = document.createElement("div");
+    textItem.classList.add("ellipses");
+    let textString = item["title"].toString().slice(0);
+    // Assign first half to "start" and second half to "end"
+    let midPos = Math.floor(textString.length/2);
+    textItem.dataset.start = textString.substring(0,midPos);
+    textItem.dataset.end = textString.substring(midPos,textString.length);
+    listItem.append(textItem);
     // Initialize display for the first item.
     if(flag){
         activeItem = listItem;
@@ -43,15 +49,6 @@ itemList.forEach((item)=>{
         flag = false;
     }
     list.append(listItem);
-})
-
-// Fixing text that overflows 
-var ellipsesText = document.querySelectorAll(".ellipses");
-ellipsesText.forEach((item)=>{
-    if(item.offsetWidth < item.scrollWidth){
-        let text = item.textContent;
-        item.dataset.tail = text.slice(text.length - 10);
-    }
 })
 
 /*
@@ -89,4 +86,3 @@ document.addEventListener("keydown",(event)=>{
         changePreview(currItem);
     }
 });
-//END
